@@ -1,20 +1,24 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Deployment
 
-First, run the development server:
+### Vercel
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Push your code to GitHub.
+2. Link the repository to a new project on [Vercel](https://vercel.com).
+3. Add the following Environment Variables in Vercel:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+4. Deploy!
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Supabase Configuration
+
+After deploying to Vercel, update your Supabase project settings:
+1. **Authentication > URL Configuration**:
+   - Set **Site URL** to your Vercel deployment URL (e.g., `https://bookmark-hub.vercel.app`).
+   - Add your Vercel URL + `/auth/callback` to the **Redirect URLs**.
+2. **Realtime**:
+   - Ensure Realtime is enabled for the `bookmarks` table (see `walkthrough.md` for details).
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

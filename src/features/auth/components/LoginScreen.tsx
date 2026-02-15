@@ -63,14 +63,14 @@ export default function LoginScreen() {
                         <p className="text-slate-500 text-sm font-semibold uppercase tracking-[0.2em]">One-click secure access</p>
                     </div>
                 </div>
-
+{/* 
                 <div className="mt-12 flex justify-center space-x-6 text-indigo-300/30 text-xs font-bold uppercase tracking-widest">
                     <span>Encrypted</span>
                     <span>•</span>
                     <span>Cloud Sync</span>
                     <span>•</span>
                     <span>Real-time</span>
-                </div>
+                </div> */}
             </div>
         </div>
     )
