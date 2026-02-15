@@ -3,9 +3,22 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
 export async function GET(request: Request) {
-    const { searchParams, origin } = new URL(request.url)
+    const { searchParams } = new URL(request.url)
     const code = searchParams.get('code')
     const next = searchParams.get('next') ?? '/'
+
+    // Get the site URL from env or fallback to dynamic detection
+    let baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+
+    if (!baseUrl) {
+        // Dynamic detection if env is not set
+        const protocol = request.headers.get('x-forwarded-proto') ?? 'http'
+        const host = request.headers.get('host')
+        baseUrl = `${protocol}://${host}`
+    }
+
+    // Clean up base URL (remove trailing slash)
+    baseUrl = baseUrl.replace(/\/$/, '')
 
     if (code) {
         const cookieStore = await cookies()
@@ -33,10 +46,10 @@ export async function GET(request: Request) {
         )
         const { error } = await supabase.auth.exchangeCodeForSession(code)
         if (!error) {
-            return NextResponse.redirect(`${origin}${next}`)
+            return NextResponse.redirect(`${baseUrl}${next}`)
         }
     }
 
     // Return the user to an error page with instructions
-    return NextResponse.redirect(`${origin}/auth/auth-code-error`)
+    return NextResponse.redirect(`${baseUrl}/auth/auth-code-error`)
 }

@@ -11,9 +11,9 @@ export default function LoginScreen() {
             return
         }
 
-        // Use the environment variable for redirects to be more robust in production
-        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin
-        const redirectTo = `${baseUrl.replace(/\/$/, '')}/auth/callback`
+        // Use window.location.origin for more reliable redirects in any environment
+        const origin = typeof window !== 'undefined' ? window.location.origin : ''
+        const redirectTo = `${origin}/auth/callback`
 
         await supabase.auth.signInWithOAuth({
             provider: 'google',
